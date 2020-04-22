@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
-import { Node, TreeTableNode, Options, SearchableNode } from '../models';
+import { ColumnDef, ColumnDefs, Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
@@ -17,6 +17,7 @@ import { Subject } from 'rxjs';
 export class TreetableComponent<T> implements OnInit {
   @Input() @Required tree: Node<T> | Node<T>[];
   @Input() options: Options<T> = {};
+  @Input() columnDefs: ColumnDefs = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
   private searchableTree: SearchableNode<T>[];
   private treeTable: TreeTableNode<T>[];

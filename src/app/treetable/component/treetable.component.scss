@@ -15,6 +15,10 @@ mat-icon {
   background-color: #f0f0f5;
 }
 
+th.titlecase {
+  text-transform: capitalize;
+}
+
 td[class*=' mat-column']{
   width: 10vw;
   min-width: 10vw;;

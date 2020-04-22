@@ -2,26 +2,37 @@
   <div>
     <h1>Angular Material TreeTable Component</h1>
   </div>
-  <div>
+  <!-- <div>
     <iframe
       src="https://ghbtns.com/github-btn.html?user=mlrv&repo=ng-material-treetable&type=star&count=true&size=large"
-    frameborder="0"
-    scrolling="0"
-    width="160px"
-    height="30px">
-  </iframe>
-  <iframe
-    src="https://ghbtns.com/github-btn.html?user=mlrv&repo=ng-material-treetable&type=watch&count=true&size=large&v=2"
-    frameborder="0"
-    scrolling="0"
-    width="160px"
-    height="30px">
-  </iframe>
-  </div>
+      frameborder="0"
+      scrolling="0"
+      width="160px"
+      height="30px">
+    </iframe>
+    <iframe
+      src="https://ghbtns.com/github-btn.html?user=mlrv&repo=ng-material-treetable&type=watch&count=true&size=large&v=2"
+      frameborder="0"
+      scrolling="0"
+      width="160px"
+      height="30px">
+    </iframe>
+  </div> -->
 </div>
 
-<h2>Tree as Single Root Node</h2>
+<!-- <h2>Tree as Single Root Node</h2>
 <treetable [tree]="singleRootTree"></treetable>
 
 <h2>Tree as Array of Nodes</h2>
-<treetable [tree]="arrayOfNodesTree"></treetable>
+<treetable [tree]="arrayOfNodesTree"></treetable> -->
+
+<h2>Tree with custom templates and drag & drop</h2>
+<treetable
+  [tree]="templateTree"
+  [columnDefs]="templateTreeColumnDefs"
+  [options]="templateTreeOptions"
+></treetable>
+
+<ng-template #completedTemplate let-value="value">
+  {{ value ? '✓' : '×'}}
+</ng-template>
