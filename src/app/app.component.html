@@ -26,13 +26,25 @@
 <h2>Tree as Array of Nodes</h2>
 <treetable [tree]="arrayOfNodesTree"></treetable> -->
 
-<h2>Tree with custom templates and drag & drop</h2>
+<!-- <br>
+<br>
+
+<h2>Tree with custom template</h2>
 <treetable
   [tree]="templateTree"
   [columnDefs]="templateTreeColumnDefs"
   [options]="templateTreeOptions"
-></treetable>
+></treetable> -->
 
 <ng-template #completedTemplate let-value="value">
   {{ value ? '✓' : '×'}}
 </ng-template>
+
+<br>
+<br>
+
+<h2>Tree with drag & drop</h2>
+<treetable
+  [tree]="templateTree"
+  [options]="dragAndDropTreeOptions"
+></treetable>

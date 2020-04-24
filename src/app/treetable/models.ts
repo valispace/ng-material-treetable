@@ -1,5 +1,6 @@
 import { TemplateRef } from "@angular/core";
 
+
 export interface Node<T> {
   value: T;
   children: Node<T>[];
@@ -37,5 +38,6 @@ export interface Options<T> {
   capitalisedHeader?: boolean;
   highlightRowOnHover?: boolean;
   customColumnOrder?: Array<keyof T> & string[];
+  dragAndDropEnabled?: boolean;
 	elevation?: number;
 }

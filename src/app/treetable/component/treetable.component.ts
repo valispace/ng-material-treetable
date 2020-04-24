@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
-import { ColumnDef, ColumnDefs, Node, TreeTableNode, Options, SearchableNode } from '../models';
+import { ColumnDefs, Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
@@ -8,6 +8,8 @@ import { defaultOptions } from '../default.options';
 import { flatMap, defaults } from 'lodash-es';
 import { Required } from '../decorators/required.decorator';
 import { Subject } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'ng-treetable, treetable', // 'ng-treetable' is currently being deprecated
@@ -88,4 +90,8 @@ export class TreetableComponent<T> implements OnInit {
     return defaults(this.options, defaultOpts);
   }
 
+  dropRow(event: CdkDragDrop<string[]>) {
+    console.log('Drop!', event);
+    // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  }
 }
