@@ -44,4 +44,12 @@ export class AppComponent implements AfterViewInit {
       }
     };
   }
+
+  itemMoved(event: any) {
+    console.log('itemMoved');
+    console.log(event);
+    /* console.log('item', event.item);
+    console.log('item', event.target);
+    console.log('item', event.source); */
+  }
 }

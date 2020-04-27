@@ -8,7 +8,6 @@ import { defaultOptions } from '../default.options';
 import { flatMap, defaults } from 'lodash-es';
 import { Required } from '../decorators/required.decorator';
 import { Subject } from 'rxjs';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -21,10 +20,13 @@ export class TreetableComponent<T> implements OnInit {
   @Input() options: Options<T> = {};
   @Input() columnDefs: ColumnDefs = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
+  @Output() itemMoved: Subject<any> = new Subject();
   private searchableTree: SearchableNode<T>[];
   private treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
+  dragItemId: string; // Item currently in drag.
+  dropDisabledDict: any = {}; // Holds ID of parent of dragged object if it has one, used to disable drop.
 
   constructor(
     private treeService: TreeService,
@@ -54,6 +56,9 @@ export class TreetableComponent<T> implements OnInit {
     const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
     this.treeTable = flatMap(treeTableTree, this.treeService.flatten);
     this.dataSource = this.generateDataSource();
+
+    // console.log(this.dataSource);
+    // console.log(this.searchableTree);
   }
 
   extractNodeProps(tree: Node<T> & { value: { [k: string]: any } }): string[] {
@@ -90,8 +95,31 @@ export class TreetableComponent<T> implements OnInit {
     return defaults(this.options, defaultOpts);
   }
 
-  dropRow(event: CdkDragDrop<string[]>) {
-    console.log('Drop!', event);
-    // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  // Drag & Drop
+  dragStarted(row: any, event: any) {
+    console.log('dragStarted', row.id);
+    this.dragItemId = row.id;
+    /* this.dataSource.data.forEach(entry => {
+      if (entry.children.map(child => child.id).includes(this.dragItemId)) {
+        this.dropDisabledDict[entry.id] = true;
+      }
+    }); */
+    // console.log('dropDisabledDict', this.dropDisabledDict);
+  }
+  dragReleased() {
+    this.dragItemId = null;
+    // this.dropDisabledDict = {};
+  }
+
+  dropListDropped(event: any) {
+    console.log('dropListDropped', event);
+
+    // Do the checking if it was legit.
+
+    this.itemMoved.next({
+      item: null,
+      target: event, // .container.data.value,
+      source: null,
+    });
   }
 }
