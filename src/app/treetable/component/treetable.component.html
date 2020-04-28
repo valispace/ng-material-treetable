@@ -65,10 +65,12 @@
     }"
     cdkDropList
     cdkDrag
+    cdkDropListSortingDisabled
     [id]="row.id"
+    [cdkDragData]="row"
     [cdkDropListData]="row"
     [cdkDropListDisabled]="!options.dragAndDropEnabled"
-    (cdkDragStarted)="dragStarted(row, $event)"
+    (cdkDragStarted)="dragStarted(row)"
     (cdkDragReleased)="dragReleased()"
     (cdkDropListDropped)="dropListDropped($event)"
   ></tr>

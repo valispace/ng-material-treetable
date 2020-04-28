@@ -1,13 +1,15 @@
-import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+
+import { Subject } from 'rxjs';
+import { flatMap, defaults } from 'lodash-es';
+
 import { ColumnDefs, Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
-import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
 import { ConverterService } from '../services/converter/converter.service';
 import { defaultOptions } from '../default.options';
-import { flatMap, defaults } from 'lodash-es';
 import { Required } from '../decorators/required.decorator';
-import { Subject } from 'rxjs';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class TreetableComponent<T> implements OnInit {
   @Input() options: Options<T> = {};
   @Input() columnDefs: ColumnDefs = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
-  @Output() itemMoved: Subject<any> = new Subject();
+  @Output() itemMoved: EventEmitter<any> = new EventEmitter<any>();
   private searchableTree: SearchableNode<T>[];
   private treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
@@ -96,8 +98,10 @@ export class TreetableComponent<T> implements OnInit {
   }
 
   // Drag & Drop
-  dragStarted(row: any, event: any) {
+  dragStarted(row: any) {
+
     console.log('dragStarted', row.id);
+
     this.dragItemId = row.id;
     /* this.dataSource.data.forEach(entry => {
       if (entry.children.map(child => child.id).includes(this.dragItemId)) {
@@ -112,14 +116,19 @@ export class TreetableComponent<T> implements OnInit {
   }
 
   dropListDropped(event: any) {
+
     console.log('dropListDropped', event);
 
     // Do the checking if it was legit.
 
-    this.itemMoved.next({
-      item: null,
-      target: event, // .container.data.value,
-      source: null,
-    });
+    const source = event.previousContainer;
+    const target = event.container;
+    if (target.id !== source.id) {
+      this.itemMoved.emit({
+        item: event.item.data.value,
+        target: target.data.value,
+        source: source.data.value, // This is actually the object itself bc we use rows as both drag and drop list.
+      });
+    }
   }
 }
