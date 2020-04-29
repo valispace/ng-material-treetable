@@ -23,6 +23,17 @@ A simple, customisable, and easy to use Angular Material TreeTable component.
 1. [Options](#options)
 1. [Events](#events)
 
+## Build & publish
+
+- Delete `/dist` folder
+- Increment package version (0.5.5-valispace.x)
+- Build and publish:
+
+  ```
+  npm run packagr
+  npm publish dist
+  ```
+
 ## Installation
 
 Simply install the package through `npm`
