@@ -5,7 +5,7 @@
     "type": "git",
     "url": "ssh://git@github.com/valispace/ng-material-treetable.git"
   },
-  "version": "0.5.5-valispace.6",
+  "version": "0.5.5-valispace.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
