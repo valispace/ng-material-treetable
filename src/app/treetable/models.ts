@@ -34,10 +34,12 @@ export interface ColumnDefs {
 }
 
 export interface Options<T> {
+  horizontalSeparator?: boolean;
   verticalSeparator?: boolean;
   capitalisedHeader?: boolean;
   highlightRowOnHover?: boolean;
   customColumnOrder?: Array<keyof T> & string[];
   dragAndDropEnabled?: boolean;
+  stepSize?: number; // level indentation in px.
 	elevation?: number;
 }

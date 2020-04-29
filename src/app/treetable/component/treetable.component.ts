@@ -13,7 +13,7 @@ import { Required } from '../decorators/required.decorator';
 
 
 @Component({
-  selector: 'ng-treetable, treetable', // 'ng-treetable' is currently being deprecated
+  selector: 'treetable',
   templateUrl: './treetable.component.html',
   styleUrls: ['./treetable.component.scss']
 })
@@ -35,12 +35,7 @@ export class TreetableComponent<T> implements OnInit {
     private validatorService: ValidatorService,
     private converterService: ConverterService,
     elem: ElementRef
-  ) {
-    const tagName = elem.nativeElement.tagName.toLowerCase();
-    if (tagName === 'ng-treetable') {
-      console.warn(`DEPRECATION WARNING: \n The 'ng-treetable' selector is being deprecated. Please use the new 'treetable' selector`);
-    }
-  }
+  ) {}
 
   ngOnInit() {
     this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
@@ -71,8 +66,10 @@ export class TreetableComponent<T> implements OnInit {
     return new MatTableDataSource(this.treeTable.filter(x => x.isVisible));
   }
 
-  formatIndentation(node: TreeTableNode<T>, step: number = 5): string {
-    return '&nbsp;'.repeat(node.depth * step);
+  formatIndentation(node: TreeTableNode<T>): any {
+    return {
+      paddingLeft: node.depth * this.options.stepSize + 'px',
+    };
   }
 
 	formatElevation(): string {

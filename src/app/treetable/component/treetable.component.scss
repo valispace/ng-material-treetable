@@ -37,6 +37,10 @@ td[class*=' mat-column']{
   padding: 10px;
 }
 
+.mat-cell:not(.horizontal-separator) {
+  border-bottom: none;
+}
+
 .vertical-separator {
   border-left: 1px solid #f0f0f5;
 }
