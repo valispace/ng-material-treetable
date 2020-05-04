@@ -5,10 +5,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { TreetableComponent } from './component/treetable.component';
 export { Node, Options} from './models';
+import { DebugPipe } from './pipes';
 
 @NgModule({
   declarations: [
-    TreetableComponent
+    TreetableComponent,
+    DebugPipe,
   ],
   imports: [
     CommonModule,

@@ -31,18 +31,14 @@
           'vertical-separator': options.verticalSeparator
         }"
       >
-        <div *ngIf="isFirst">
-          <div class="value-cell" [ngStyle]="formatIndentation(element)">
-            <mat-icon
-              [ngStyle]="{'visibility': element.children.length ? 'visible' : 'hidden'}"
-              (click)="onNodeClick(element)"
-            >
-              {{element.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}
-            </mat-icon>
-            <div>{{element.value[column]}}</div>
-          </div>
-        </div>
-        <div *ngIf="!isFirst">
+        <div class="value-cell" [ngStyle]="isFirst ? formatIndentation(element) : ''">
+          <mat-icon
+            *ngIf="isFirst"
+            [ngStyle]="{'visibility': element.children.length ? 'visible' : 'hidden'}"
+            (click)="onNodeClick(element)"
+          >
+            {{element.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}
+          </mat-icon>
           <ng-container
             *ngIf="columnDefs && columnDefs[column]?.template; else defaultDef"
             [ngTemplateOutlet]="columnDefs[column].template"

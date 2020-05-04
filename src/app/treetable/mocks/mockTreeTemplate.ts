@@ -1,12 +1,17 @@
 import { Node } from '../models';
 import { Task } from './models';
 
-export const mockTreeTemplate: Node<Task>[] = [
+export const mockTreeTemplate: Node<any>[] = [
   {
     value: {
       name: 'Tasks for Sprint 1',
       completed: true,
-      owner: 'Marco'
+      owner: 'Marco',
+      data: 'not working', /* {
+        a: 5,
+        b: 10,
+        c: 12,
+      }, */
     },
     children: [
       {

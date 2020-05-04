@@ -1,6 +1,7 @@
 import { Component, ViewChild, TemplateRef, AfterViewInit } from '@angular/core';
 import { ColumnDefs, Node, Options } from './treetable/models';
 import { mockTree } from './treetable/mocks/mockTree';
+import { mockTreeTemplate } from './treetable/mocks/mockTreeTemplate';
 import { mockTreeAsArrayOfNodes } from './treetable/mocks/mockTreeAsArrayOfNodes';
 import { Folder, Task } from './treetable/mocks/models';
 
@@ -12,13 +13,15 @@ import { Folder, Task } from './treetable/mocks/models';
 })
 export class AppComponent implements AfterViewInit {
 
+  @ViewChild('nameTemplate', {static: true}) nameTemplate: TemplateRef<any>;
   @ViewChild('completedTemplate', {static: true}) completedTemplate: TemplateRef<any>;
+  @ViewChild('dataTemplate', {static: true}) dataTemplate: TemplateRef<any>;
 
   singleRootTree: Node<Folder> = mockTree;
   arrayOfNodesTree: Node<Task>[] = mockTreeAsArrayOfNodes;
 
   // Template tree
-  templateTree: Node<Task>[] = mockTreeAsArrayOfNodes;
+  templateTree: Node<Task>[] = mockTreeTemplate;
   templateTreeColumnDefs: ColumnDefs = {};
   templateTreeOptions: Options<any> = {
     verticalSeparator: false,
@@ -38,10 +41,18 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit() {
     // Init column defs (ViewChild is undefined before view init).
     this.templateTreeColumnDefs = {
+      name: {
+        label: 'Name mod',
+        template: this.nameTemplate,
+      },
       completed: {
         label: 'Completed (icon)',
         template: this.completedTemplate,
-      }
+      },
+      data: {
+        label: 'Data (object)',
+        template: this.dataTemplate,
+      },
     };
   }
 
