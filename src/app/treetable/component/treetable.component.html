@@ -2,8 +2,11 @@
   mat-table
   [dataSource]="dataSource"
   [ngClass]="formatElevation()"
-  cdkDropListGroup
 >
+  <!--
+    D&D directives:
+    cdkDropListGroup
+  -->
   <div *ngFor="let column of displayedColumns; first as isFirst;">
     <ng-container matColumnDef="{{column}}">
       <th
@@ -57,20 +60,25 @@
   <tr
     mat-row
     *matRowDef="let row; columns: displayedColumns;"
-    [ngClass]="{
-      'highlight-on-hover': options.highlightRowOnHover,
+    [ngClass]="{'highlight-on-hover': options.highlightRowOnHover}"
+  >
+    <!--
+      D&D classes:
       'drag-enabled': options.dragAndDropEnabled
-    }"
-    cdkDropList
-    cdkDrag
-    cdkDropListSortingDisabled
-    [id]="row.id"
-    [cdkDragData]="row"
-    [cdkDropListData]="row"
-    [cdkDropListDisabled]="!options.dragAndDropEnabled"
-    (cdkDragStarted)="dragStarted(row)"
-    (cdkDragReleased)="dragReleased()"
-    (cdkDropListDropped)="dropListDropped($event)"
-  ></tr>
+    -->
+    <!--
+      D&D directives:
+      cdkDropList
+      cdkDrag
+      cdkDropListSortingDisabled
+      [id]="row.id"
+      [cdkDragData]="row"
+      [cdkDropListData]="row"
+      [cdkDropListDisabled]="!options.dragAndDropEnabled"
+      (cdkDragStarted)="dragStarted(row)"
+      (cdkDragReleased)="dragReleased()"
+      (cdkDropListDropped)="dropListDropped($event)"
+    -->
+  </tr>
 
 </table>

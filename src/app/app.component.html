@@ -48,7 +48,13 @@
   {{ value }}
 </ng-template>
 
-<br>
+<p>
+  <a (click)="addEntry()" class="add-btn">
+    + Test add
+  </a>
+</p>
+
+<!-- <br>
 <br>
 
 <h2>Tree with drag & drop</h2>
@@ -56,4 +62,4 @@
   [tree]="templateTree"
   [options]="dragAndDropTreeOptions"
   (itemMoved)="itemMoved($event)"
-></treetable>
+></treetable> -->

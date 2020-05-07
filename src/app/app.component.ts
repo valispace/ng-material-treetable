@@ -56,11 +56,22 @@ export class AppComponent implements AfterViewInit {
     };
   }
 
-  itemMoved(event: any) {
+  addEntry() {
+    const randInt = Math.round(Math.random() * 100);
+    const newTemplateTree = this.templateTree.slice();
+    newTemplateTree.push({
+      value: {
+        name: `New entry ${randInt}`,
+        completed: randInt % 2 === 0,
+        owner: `Owner ${randInt}`,
+      },
+      children: [],
+    });
+    this.templateTree = newTemplateTree;
+  }
+
+  /* itemMoved(event: any) {
     console.log('itemMoved');
     console.log(event);
-    /* console.log('item', event.item);
-    console.log('item', event.target);
-    console.log('item', event.source); */
-  }
+  } */
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 
 import { Subject } from 'rxjs';
@@ -17,7 +17,7 @@ import { Required } from '../decorators/required.decorator';
   templateUrl: './treetable.component.html',
   styleUrls: ['./treetable.component.scss']
 })
-export class TreetableComponent<T> implements OnInit {
+export class TreetableComponent<T> implements OnInit, OnChanges {
   @Input() @Required tree: Node<T> | Node<T>[];
   @Input() options: Options<T> = {};
   @Input() columnDefs: ColumnDefs = {};
@@ -27,8 +27,8 @@ export class TreetableComponent<T> implements OnInit {
   private treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
-  dragItemId: string; // Item currently in drag.
-  dropDisabledDict: any = {}; // Holds ID of parent of dragged object if it has one, used to disable drop.
+  // dragItemId: string; // Item currently in drag.
+  // dropDisabledDict: any = {}; // Holds ID of parent of dragged object if it has one, used to disable drop.
 
   constructor(
     private treeService: TreeService,
@@ -38,6 +38,16 @@ export class TreetableComponent<T> implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.updateTree();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.tree && changes.tree.firstChange === false) {
+      this.updateTree();
+    }
+  }
+
+  private updateTree() {
     this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
     this.options = this.parseOptions(defaultOptions);
     const customOrderValidator = this.validatorService.validateCustomOrder(this.tree[0], this.options.customColumnOrder);
@@ -53,9 +63,6 @@ export class TreetableComponent<T> implements OnInit {
     const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
     this.treeTable = flatMap(treeTableTree, this.treeService.flatten);
     this.dataSource = this.generateDataSource();
-
-    // console.log(this.dataSource);
-    // console.log(this.searchableTree);
   }
 
   extractNodeProps(tree: Node<T> & { value: { [k: string]: any } }): string[] {
@@ -94,27 +101,24 @@ export class TreetableComponent<T> implements OnInit {
     return defaults(this.options, defaultOpts);
   }
 
-  // Drag & Drop
-  dragStarted(row: any) {
+  // Drag & Drop TBD...
+  /* dragStarted(row: any) {
 
     console.log('dragStarted', row.id);
 
     this.dragItemId = row.id;
-    /* this.dataSource.data.forEach(entry => {
-      if (entry.children.map(child => child.id).includes(this.dragItemId)) {
-        this.dropDisabledDict[entry.id] = true;
-      }
-    }); */
+    // this.dataSource.data.forEach(entry => {
+    //   if (entry.children.map(child => child.id).includes(this.dragItemId)) {
+    //     this.dropDisabledDict[entry.id] = true;
+    //   }
+    // });
     // console.log('dropDisabledDict', this.dropDisabledDict);
   }
   dragReleased() {
     this.dragItemId = null;
     // this.dropDisabledDict = {};
   }
-
   dropListDropped(event: any) {
-
-    console.log('dropListDropped', event);
 
     // Do the checking if it was legit.
 
@@ -127,5 +131,5 @@ export class TreetableComponent<T> implements OnInit {
         source: source.data.value, // This is actually the object itself bc we use rows as both drag and drop list.
       });
     }
-  }
+  } */
 }
